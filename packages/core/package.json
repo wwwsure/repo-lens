@@ -14,9 +14,24 @@
   "files": [
     "dist"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wwwsure/repo-lens.git",
+    "directory": "packages/core"
+  },
+  "homepage": "https://github.com/wwwsure/repo-lens#readme",
+  "bugs": {
+    "url": "https://github.com/wwwsure/repo-lens/issues"
+  },
   "scripts": {
     "build": "tsc -b",
     "test": "node --test \"test/*.test.ts\""
+  },
+  "dependencies": {
+    "typescript": "^5.7.0"
   },
   "engines": {
     "node": ">=22.18"

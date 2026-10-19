@@ -7,6 +7,7 @@
  * Grammar:
  *   repo-lens analyze [dir=.] [--json] [--no-cache] [--no-gitignore]
  *   repo-lens map     [dir=.] [--max-depth N=4] [--no-cache]
+ *   repo-lens chain   <file[:symbol]> [--dir dir=.] [--max-depth N=3] [--json]
  *   repo-lens --help | --version
  */
 
@@ -34,14 +35,27 @@ export interface MapOptions {
   cache: boolean;
 }
 
+export interface ChainOptions {
+  /** Entry point as typed by the user: `file` or `file:SymbolName`. */
+  entry: string;
+  /** Repository root scanned for the call graph (default "."). */
+  dir: string;
+  /** --max-depth N (default 3). */
+  maxDepth: number;
+  /** --json: print the raw ChainResult instead of the tree view. */
+  json: boolean;
+}
+
 export type ParsedCommand =
   | { kind: 'help' }
   | { kind: 'version' }
   | { kind: 'analyze'; options: AnalyzeOptions }
-  | { kind: 'map'; options: MapOptions };
+  | { kind: 'map'; options: MapOptions }
+  | { kind: 'chain'; options: ChainOptions };
 
-const COMMANDS = new Set(['analyze', 'map']);
+const COMMANDS = new Set(['analyze', 'map', 'chain']);
 const DEFAULT_MAX_DEPTH = 4;
+const DEFAULT_CHAIN_MAX_DEPTH = 3;
 
 function isHelpFlag(token: string): boolean {
   return token === '--help' || token === '-h';
@@ -55,8 +69,9 @@ function unknownOption(token: string): CliError {
   return new CliError(`unknown option: ${token} (run 'repo-lens --help' for usage)`);
 }
 
-function optionForWrongCommand(token: string, command: string): CliError {
-  return new CliError(`option ${token} is only valid with the '${command}' command`);
+function optionForWrongCommand(token: string, commands: readonly string[]): CliError {
+  const list = commands.map((c) => `'${c}'`).join(' or ');
+  return new CliError(`option ${token} is only valid with the ${list} command`);
 }
 
 /**
@@ -74,26 +89,28 @@ export function parseArgs(argv: string[]): ParsedCommand {
   // The command must be the first token; bare flags with no command are an error.
   const command = argv[0]!;
   if (command.startsWith('-')) {
-    throw new CliError(`missing command: expected 'analyze' or 'map'`);
+    throw new CliError(`missing command: expected 'analyze', 'map' or 'chain'`);
   }
   if (!COMMANDS.has(command)) {
-    throw new CliError(`unknown command: ${command} (expected 'analyze' or 'map')`);
+    throw new CliError(`unknown command: ${command} (expected 'analyze', 'map' or 'chain')`);
   }
 
-  let dir: string | null = null;
+  let positional: string | null = null;
+  let dirOption: string | null = null;
   let json = false;
   let cache = true;
   let gitignore = true;
-  let maxDepth = DEFAULT_MAX_DEPTH;
+  let maxDepth: number | null = null;
 
   for (let i = 1; i < argv.length; i++) {
     const token = argv[i]!;
 
     if (!token.startsWith('-')) {
-      if (dir !== null) {
-        throw new CliError(`unexpected argument: ${token} (only one directory is accepted)`);
+      if (positional !== null) {
+        const hint = command === 'chain' ? 'only one entry is accepted' : 'only one directory is accepted';
+        throw new CliError(`unexpected argument: ${token} (${hint})`);
       }
-      dir = token;
+      positional = token;
       continue;
     }
 
@@ -115,23 +132,35 @@ export function parseArgs(argv: string[]): ParsedCommand {
     switch (name) {
       case '--no-cache':
         if (inlineValue !== null) throw unknownOption(token);
+        if (command !== 'analyze' && command !== 'map') {
+          throw optionForWrongCommand('--no-cache', ['analyze', 'map']);
+        }
         cache = false;
         break;
 
       case '--json':
         if (inlineValue !== null) throw unknownOption(token);
-        if (command !== 'analyze') throw optionForWrongCommand('--json', 'analyze');
+        if (command !== 'analyze' && command !== 'chain') {
+          throw optionForWrongCommand('--json', ['analyze', 'chain']);
+        }
         json = true;
         break;
 
       case '--no-gitignore':
         if (inlineValue !== null) throw unknownOption(token);
-        if (command !== 'analyze') throw optionForWrongCommand('--no-gitignore', 'analyze');
+        if (command !== 'analyze') throw optionForWrongCommand('--no-gitignore', ['analyze']);
         gitignore = false;
         break;
 
+      case '--dir':
+        if (command !== 'chain') throw optionForWrongCommand('--dir', ['chain']);
+        dirOption = takeValue();
+        break;
+
       case '--max-depth': {
-        if (command !== 'map') throw optionForWrongCommand('--max-depth', 'map');
+        if (command !== 'map' && command !== 'chain') {
+          throw optionForWrongCommand('--max-depth', ['map', 'chain']);
+        }
         const raw = takeValue();
         if (!/^\d+$/.test(raw)) {
           throw new CliError(`--max-depth requires a non-negative integer, got: ${raw}`);
@@ -145,14 +174,29 @@ export function parseArgs(argv: string[]): ParsedCommand {
     }
   }
 
+  if (command === 'chain') {
+    if (positional === null) {
+      throw new CliError(`missing entry: expected 'repo-lens chain <file[:symbol]>'`);
+    }
+    return {
+      kind: 'chain',
+      options: {
+        entry: positional,
+        dir: dirOption ?? '.',
+        maxDepth: maxDepth ?? DEFAULT_CHAIN_MAX_DEPTH,
+        json,
+      },
+    };
+  }
+
   if (command === 'analyze') {
     return {
       kind: 'analyze',
-      options: { dir: dir ?? '.', json, cache, gitignore },
+      options: { dir: positional ?? '.', json, cache, gitignore },
     };
   }
   return {
     kind: 'map',
-    options: { dir: dir ?? '.', maxDepth, cache },
+    options: { dir: positional ?? '.', maxDepth: maxDepth ?? DEFAULT_MAX_DEPTH, cache },
   };
 }

@@ -1,0 +1,45 @@
+{
+  "name": "@repo-lens/mcp-server",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "repo-lens MCP server (stdio) — expose deterministic repository analysis to MCP hosts such as DSH, Claude Code and Codex.",
+  "license": "MIT",
+  "bin": {
+    "repo-lens-mcp": "dist/index.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wwwsure/repo-lens.git",
+    "directory": "packages/mcp-server"
+  },
+  "homepage": "https://github.com/wwwsure/repo-lens#readme",
+  "bugs": {
+    "url": "https://github.com/wwwsure/repo-lens/issues"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "repo",
+    "analysis",
+    "ai",
+    "agent"
+  ],
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.12.0",
+    "@repo-lens/core": "workspace:*",
+    "zod": "^4.6.7"
+  },
+  "scripts": {
+    "build": "tsc -b",
+    "smoke": "node scripts/smoke.mjs"
+  },
+  "engines": {
+    "node": ">=22.18"
+  }
+}

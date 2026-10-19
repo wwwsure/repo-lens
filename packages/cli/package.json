@@ -9,6 +9,26 @@
   "files": [
     "dist"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wwwsure/repo-lens.git",
+    "directory": "packages/cli"
+  },
+  "homepage": "https://github.com/wwwsure/repo-lens#readme",
+  "bugs": {
+    "url": "https://github.com/wwwsure/repo-lens/issues"
+  },
+  "keywords": [
+    "repo",
+    "analysis",
+    "ai",
+    "agent",
+    "codebase",
+    "cli"
+  ],
   "dependencies": {
     "@repo-lens/core": "workspace:*"
   },
