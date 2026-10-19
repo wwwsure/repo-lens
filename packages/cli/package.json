@@ -1,0 +1,21 @@
+{
+  "name": "@repo-lens/cli",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "repo-lens command line — analyze repositories and print directory maps for AI coding agents.",
+  "bin": {
+    "repo-lens": "dist/index.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "@repo-lens/core": "workspace:*"
+  },
+  "scripts": {
+    "build": "tsc -b"
+  },
+  "engines": {
+    "node": ">=22.18"
+  }
+}
