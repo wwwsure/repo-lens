@@ -168,6 +168,24 @@ Claude Code 可写入用户级 `~/.claude.json` 或项目级 `.mcp.json`；DSH /
 pnpm --filter @repo-lens/mcp-server smoke
 ```
 
+### Skill 壳安装
+
+Skill 壳本体在仓库内 [`skills/repo-lens/SKILL.md`](skills/repo-lens/SKILL.md)。把它复制到对应
+harness 的技能目录即可：
+
+| Harness | 目标路径 |
+| --- | --- |
+| DeepSeek Harness | `~/.agents/skills/repo-lens/` |
+| Claude Code | `~/.claude/skills/repo-lens/` |
+| Codex | `~/.codex/skills/repo-lens/` |
+
+```bash
+cp -r skills/repo-lens ~/.claude/skills/
+cp -r skills/repo-lens ~/.codex/skills/
+```
+
+安装后无需点名工具，直接说「分析这个仓库」「了解项目结构」「understand this repo」即可触发。
+
 ## Monorepo 结构
 
 pnpm workspace（`packages/*`）+ TypeScript project references（`tsc -b` 增量构建）。
@@ -177,6 +195,7 @@ pnpm workspace（`packages/*`）+ TypeScript project references（`tsc -b` 增�
 | `packages/core` | `@repo-lens/core` | 分析内核：目录树扫描、manifest 解析、语言识别、profile 缓存、AST 调用图 |
 | `packages/cli` | `@repo-lens/cli` | 命令行壳：`analyze` / `map` / `chain`，bin 名 `repo-lens` |
 | `packages/mcp-server` | `@repo-lens/mcp-server` | MCP 壳：stdio 传输，三工具，bin 名 `repo-lens-mcp` |
+| `skills/repo-lens` | —— | Skill 壳本体（SKILL.md），复制到 harness 技能目录即用 |
 
 测试：Node 内置 `node:test`，共 34 个用例（`packages/core/test/`）；MCP server 另有冒烟脚本
 `packages/mcp-server/scripts/smoke.mjs`。
