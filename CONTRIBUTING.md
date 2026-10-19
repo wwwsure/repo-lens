@@ -15,10 +15,10 @@ pnpm install
 
 ## 项目结构
 
-- `packages/core` — 分析内核（目录树扫描、manifest 解析、语言检测、profile 缓存与格式化）
-- `packages/cli` — 命令行壳（`repo-lens analyze` / `repo-lens map`，bin 名 `repo-lens`）
-
-> MCP server 壳与各 harness 的 SKILL.md 壳尚未实现，见 [README 路线图](README.md#路线图)。
+- `packages/core` — 分析内核（目录树扫描、manifest 解析、语言识别、profile 缓存、AST 调用图）
+- `packages/cli` — 命令行壳（`repo-lens analyze` / `map` / `chain`，bin 名 `repo-lens`）
+- `packages/mcp-server` — MCP 壳（stdio 传输，`repo_lens_analyze` / `repo_lens_map` /
+  `repo_lens_profile` 三工具，bin 名 `repo-lens-mcp`）
 
 ## Workspace 命令
 
@@ -27,9 +27,10 @@ pnpm install
 | 命令 | 说明 |
 | --- | --- |
 | `pnpm install` | 安装依赖并链接 workspace 包 |
-| `pnpm build` | `tsc -b`，增量构建 `packages/core` 与 `packages/cli` |
-| `pnpm test` | `node --test packages/core/test/`，运行全部单测 |
+| `pnpm build` | `tsc -b`，增量构建 `packages/core`、`packages/cli` 与 `packages/mcp-server` |
+| `pnpm test` | `node --test "packages/core/test/*.test.ts"`，运行全部单测（34 个用例） |
 | `pnpm clean` | `tsc -b --clean`，清理构建产物 |
+| `pnpm --filter @repo-lens/mcp-server smoke` | MCP server 冒烟：握手 → tools/list → 错误路径 |
 
 架构与扩展方式见 [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)。
 
@@ -48,11 +49,17 @@ pnpm install
 
 ## 测试
 
-测试基于 Node 内置的 `node:test`，无额外测试框架依赖：
+单测基于 Node 内置的 `node:test`（34 个用例），无额外测试框架依赖：
 
 ```bash
-pnpm test          # 运行全部测试（packages/core/test/）
+pnpm test          # 运行全部测试（packages/core/test/*.test.ts）
 pnpm test --watch  # 监听模式
+```
+
+改动 `packages/mcp-server` 时另跑冒烟脚本（不依赖 LLM，直接以 JSON-RPC 走 stdio）：
+
+```bash
+pnpm --filter @repo-lens/mcp-server smoke
 ```
 
 新增分析能力时，请同时新增对应的测试用例。
