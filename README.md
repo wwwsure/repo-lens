@@ -239,8 +239,8 @@ pnpm workspace（`packages/*`）+ TypeScript project references（`tsc -b` 增�
 - [x] AST 调用链追踪（TypeScript 编译器 API）
 - [x] MCP server 壳（stdio，三工具，DSH / Claude Code / Codex 可接入）
 - [x] Claude Code / DSH skill 壳
-- [ ] npm 发布（进行中：包名已确认可用，`pnpm publish -r`，待最终确认）
-- [ ] Marketplace 上架
+- [x] npm 发布（`@1mper-labs/core` / `@1mper-labs/cli` / `@1mper-labs/mcp-server` v0.1.1）
+- [ ] Marketplace 上架（skills.sh）
 
 ## 参与贡献
 
