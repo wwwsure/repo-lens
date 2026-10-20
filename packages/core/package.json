@@ -1,6 +1,6 @@
 {
   "name": "@1mper-labs/core",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "type": "module",
   "description": "Core analysis engine of repo-lens: repository scanning, manifest parsing, profiling and formatting.",
   "main": "dist/index.js",

@@ -1,6 +1,6 @@
 {
   "name": "@1mper-labs/cli",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "type": "module",
   "description": "repo-lens command line — analyze repositories and print directory maps for AI coding agents.",
   "bin": {

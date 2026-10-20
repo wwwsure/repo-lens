@@ -42,7 +42,7 @@ node scripts/smoke.mjs     # 冒烟：initialize 握手 → tools/list 校验三
 2. tools/list 恰好包含 `repo_lens_analyze`、`repo_lens_map`、`repo_lens_profile`；
 3. 对不存在目录调 `repo_lens_profile` 得到 `isError: true`（证明错误被捕获且 server 存活）。
 
-最小手工验证：`node dist/index.js` 启动 stdio server，stderr 打印 `[repo-lens-mcp] v0.1.0 listening on stdio`，stdout 保持干净（仅 JSON-RPC），等待 stdin 输入不退出、不崩溃。
+最小手工验证：`node dist/index.js` 启动 stdio server，stderr 打印 `[repo-lens-mcp] v0.1.1 listening on stdio`，stdout 保持干净（仅 JSON-RPC），等待 stdin 输入不退出、不崩溃。
 
 ## 说明
 

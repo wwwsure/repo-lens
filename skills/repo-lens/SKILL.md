@@ -3,7 +3,7 @@ name: repo-lens
 description: Analyze a local or cloned GitHub repository cheaply and deterministically for AI agents — directory tree, language stats, dependency manifests, and call chains — with a cross-session cache in <repo>/.repo-lens/profile.json. Use whenever the user wants to understand, analyze, summarize, map, or explore a repository (GitHub or local), including direct phrases such as 分析仓库, 分析这个仓库, 分析一下这个仓库/项目, 帮我看看这个仓库/项目, 了解项目结构, 这个项目是做什么的, 梳理代码结构, repository structure, codebase overview, understand this repo — also for listing languages/dependencies/entry points, getting a directory-tree overview (目录树), tracing a call chain (调用链), or saving tokens reading an unfamiliar codebase before deep-diving files. No need for the user to mention repo-lens by name.
 license: MIT
 metadata:
-  version: "0.1.0"
+  version: "0.1.1"
   author: wwwsure
 ---
 
@@ -57,7 +57,7 @@ repo-lens chain src/index.ts --dir <repo> --json
 
 ## Requirements
 
-Node >= 22.18. Built from source at `D:\vibe-coding\repo-lens` (pnpm monorepo: packages/core + packages/cli + packages/mcp-server). `repo-lens` is on PATH via `npm link`.
+Node >= 22.18. Built from source at `D:\vibe-coding\repo-lens` (pnpm monorepo: packages/core + packages/cli + packages/mcp-server). Install the CLI with `npm i -g @1mper-labs/cli` (provides `repo-lens` on PATH).
 
 ## Installation
 
@@ -70,7 +70,10 @@ Copy this directory into your agent's skills folder:
 | Codex | `~/.codex/skills/repo-lens/` |
 
 ```bash
-# from the repo root, after `pnpm install && pnpm build && npm link -w packages/cli`
+# CLI from npm (provides `repo-lens` on PATH)
+npm i -g @1mper-labs/cli
+
+# then copy this skill into your harness skills folder
 cp -r skills/repo-lens ~/.claude/skills/
 cp -r skills/repo-lens ~/.codex/skills/
 ```
