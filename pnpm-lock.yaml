@@ -17,7 +17,7 @@ importers:
 
   packages/cli:
     dependencies:
-      '@repo-lens/core':
+      '@1mper-labs/core':
         specifier: workspace:*
         version: link:../core
 
@@ -29,12 +29,12 @@ importers:
 
   packages/mcp-server:
     dependencies:
+      '@1mper-labs/core':
+        specifier: workspace:*
+        version: link:../core
       '@modelcontextprotocol/sdk':
         specifier: ^1.12.0
         version: 1.32.1(zod@4.6.7)
-      '@repo-lens/core':
-        specifier: workspace:*
-        version: link:../core
       zod:
         specifier: ^4.6.7
         version: 4.6.7

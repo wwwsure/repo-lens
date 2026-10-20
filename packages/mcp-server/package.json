@@ -1,5 +1,5 @@
 {
-  "name": "@repo-lens/mcp-server",
+  "name": "@1mper-labs/mcp-server",
   "version": "0.1.0",
   "type": "module",
   "description": "repo-lens MCP server (stdio) — expose deterministic repository analysis to MCP hosts such as DSH, Claude Code and Codex.",
@@ -32,7 +32,7 @@
   ],
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.12.0",
-    "@repo-lens/core": "workspace:*",
+    "@1mper-labs/core": "workspace:*",
     "zod": "^4.6.7"
   },
   "scripts": {

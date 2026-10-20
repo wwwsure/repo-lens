@@ -10,7 +10,7 @@ const NPM_PKG = JSON.stringify(
     description: 'a fixture package',
     main: 'dist/index.js',
     scripts: { build: 'tsc', test: 'node --test' },
-    dependencies: { '@repo-lens/core': 'workspace:*' },
+    dependencies: { '@1mper-labs/core': 'workspace:*' },
     devDependencies: { typescript: '^5.7.0', '@types/node': '^22.0.0' },
     workspaces: ['packages/*'],
   },

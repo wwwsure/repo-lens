@@ -1,5 +1,5 @@
 {
-  "name": "@repo-lens/cli",
+  "name": "@1mper-labs/cli",
   "version": "0.1.0",
   "type": "module",
   "description": "repo-lens command line — analyze repositories and print directory maps for AI coding agents.",
@@ -30,12 +30,13 @@
     "cli"
   ],
   "dependencies": {
-    "@repo-lens/core": "workspace:*"
+    "@1mper-labs/core": "workspace:*"
   },
   "scripts": {
     "build": "tsc -b"
   },
   "engines": {
     "node": ">=22.18"
-  }
+  },
+  "license": "MIT"
 }

@@ -30,7 +30,7 @@ pnpm install
 | `pnpm build` | `tsc -b`，增量构建 `packages/core`、`packages/cli` 与 `packages/mcp-server` |
 | `pnpm test` | `node --test "packages/core/test/*.test.ts"`，运行全部单测（34 个用例） |
 | `pnpm clean` | `tsc -b --clean`，清理构建产物 |
-| `pnpm --filter @repo-lens/mcp-server smoke` | MCP server 冒烟：握手 → tools/list → 错误路径 |
+| `pnpm --filter @1mper-labs/mcp-server smoke` | MCP server 冒烟：握手 → tools/list → 错误路径 |
 
 架构与扩展方式见 [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)。
 
@@ -59,7 +59,7 @@ pnpm test --watch  # 监听模式
 改动 `packages/mcp-server` 时另跑冒烟脚本（不依赖 LLM，直接以 JSON-RPC 走 stdio）：
 
 ```bash
-pnpm --filter @repo-lens/mcp-server smoke
+pnpm --filter @1mper-labs/mcp-server smoke
 ```
 
 新增分析能力时，请同时新增对应的测试用例。

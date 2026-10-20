@@ -20,8 +20,8 @@ import {
   loadProfile,
   resolveChain,
   saveProfile,
-} from '@repo-lens/core';
-import type { ChainResult, DirEntry } from '@repo-lens/core';
+} from '@1mper-labs/core';
+import type { ChainResult, DirEntry } from '@1mper-labs/core';
 import { CliError, parseArgs } from './args.js';
 import type { AnalyzeOptions, ChainOptions, MapOptions, ParsedCommand } from './args.js';
 

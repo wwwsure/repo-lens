@@ -54,11 +54,20 @@ pnpm build
 alias repo-lens='node packages/cli/dist/index.js'
 ```
 
-### npm（进行中，待发布）
+### npm
 
-包名已确认可用：`repo-lens`（CLI）、`@repo-lens/core`、`@repo-lens/mcp-server`；发布方式
-`pnpm publish -r`。发布后即可 `npx repo-lens ...` / `npm install -g repo-lens`，当前请从
-源码构建使用。
+三个包已发布到 npm（scope `@1mper-labs`）：
+
+| 包 | 命令 / 用法 |
+| --- | --- |
+| [`@1mper-labs/cli`](https://www.npmjs.com/package/@1mper-labs/cli) | `npm i -g @1mper-labs/cli`，bin 名 `repo-lens` |
+| [`@1mper-labs/mcp-server`](https://www.npmjs.com/package/@1mper-labs/mcp-server) | `npm i -g @1mper-labs/mcp-server`，bin 名 `repo-lens-mcp` |
+| [`@1mper-labs/core`](https://www.npmjs.com/package/@1mper-labs/core) | 可编程 API，`import { analyzeRepo } from '@1mper-labs/core'` |
+
+```bash
+npm install -g @1mper-labs/cli
+repo-lens --version
+```
 
 ## 快速开始
 
@@ -126,7 +135,7 @@ repo-lens chain src/args.ts:parseArgs --dir . --max-depth 5 # 指定符号、指
 
 ## 在 MCP 宿主中使用（DSH / Claude Code / Codex）
 
-`@repo-lens/mcp-server` 通过 stdio 暴露三个工具（v1）：
+`@1mper-labs/mcp-server` 通过 stdio 暴露三个工具（v1）：
 
 | 工具 | 入参 | 行为 |
 | --- | --- | --- |
@@ -165,7 +174,7 @@ Claude Code 可写入用户级 `~/.claude.json` 或项目级 `.mcp.json`；DSH /
 文档的 MCP 配置方式为准。冒烟验证：
 
 ```bash
-pnpm --filter @repo-lens/mcp-server smoke
+pnpm --filter @1mper-labs/mcp-server smoke
 ```
 
 ### Skill 壳安装
@@ -192,9 +201,9 @@ pnpm workspace（`packages/*`）+ TypeScript project references（`tsc -b` 增�
 
 | 路径 | 包 | 说明 |
 | --- | --- | --- |
-| `packages/core` | `@repo-lens/core` | 分析内核：目录树扫描、manifest 解析、语言识别、profile 缓存、AST 调用图 |
-| `packages/cli` | `@repo-lens/cli` | 命令行壳：`analyze` / `map` / `chain`，bin 名 `repo-lens` |
-| `packages/mcp-server` | `@repo-lens/mcp-server` | MCP 壳：stdio 传输，三工具，bin 名 `repo-lens-mcp` |
+| `packages/core` | `@1mper-labs/core` | 分析内核：目录树扫描、manifest 解析、语言识别、profile 缓存、AST 调用图 |
+| `packages/cli` | `@1mper-labs/cli` | 命令行壳：`analyze` / `map` / `chain`，bin 名 `repo-lens` |
+| `packages/mcp-server` | `@1mper-labs/mcp-server` | MCP 壳：stdio 传输，三工具，bin 名 `repo-lens-mcp` |
 | `skills/repo-lens` | —— | Skill 壳本体（SKILL.md），复制到 harness 技能目录即用 |
 
 测试：Node 内置 `node:test`，共 34 个用例（`packages/core/test/`）；MCP server 另有冒烟脚本
@@ -202,7 +211,7 @@ pnpm workspace（`packages/*`）+ TypeScript project references（`tsc -b` 增�
 
 ## 从代码调用（core API）
 
-`@repo-lens/core` 导出可编程 API，CLI / MCP 壳只是它的薄壳：
+`@1mper-labs/core` 导出可编程 API，CLI / MCP 壳只是它的薄壳：
 
 | API | 签名 / 说明 |
 | --- | --- |

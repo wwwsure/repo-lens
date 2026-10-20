@@ -105,7 +105,7 @@ scan ──> parse AST ──> resolve imports ──> call edges ──> BFS ch
 
 ### Schema（`RepoProfile`，schemaVersion = 1）
 
-字段以 `@repo-lens/core` 导出的 `RepoProfile` 类型为准：
+字段以 `@1mper-labs/core` 导出的 `RepoProfile` 类型为准：
 
 | 字段 | 类型 | 说明 |
 | --- | --- | --- |
@@ -169,7 +169,7 @@ declarations / exports / calls），边解析与 BFS 部分可整体复用。
 
 - ESM + TypeScript strict，NodeNext 风格（相对导入带 `.js` 扩展名）。
 - bin 名 `repo-lens`，入口带 `#!/usr/bin/env node` shebang。
-- 自实现轻量参数解析（`src/args.ts`），依赖仅 `@repo-lens/core`（`workspace:*`）。
+- 自实现轻量参数解析（`src/args.ts`），依赖仅 `@1mper-labs/core`（`workspace:*`）。
 - `--version` 读取自身 `package.json`；`chain` 的入口格式 `file[:symbol]` 兼容 Windows 盘符
   （`C:/x.ts` 不会被误判 symbol 分隔符）。
 
@@ -180,4 +180,4 @@ declarations / exports / calls），边解析与 BFS 部分可整体复用。
   收敛在 `tsconfig.base.json`（ES2022 / NodeNext / strict / declaration /
   rewriteRelativeImportExtensions）。
 - **测试**：Node 内置 `node:test`，`pnpm test` 运行 `packages/core/test/*.test.ts`
-  （34 个用例）；`pnpm --filter @repo-lens/mcp-server smoke` 跑 MCP 冒烟脚本。
+  （34 个用例）；`pnpm --filter @1mper-labs/mcp-server smoke` 跑 MCP 冒烟脚本。

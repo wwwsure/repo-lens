@@ -12,7 +12,7 @@ import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js'
 import { stat } from 'node:fs/promises';
 import path from 'node:path';
 import { z } from 'zod';
-import { analyzeRepo, formatSummary, formatTree, loadProfile } from '@repo-lens/core';
+import { analyzeRepo, formatSummary, formatTree, loadProfile } from '@1mper-labs/core';
 
 const SERVER_VERSION = '0.1.0';
 

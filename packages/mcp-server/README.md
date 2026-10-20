@@ -1,4 +1,4 @@
-# @repo-lens/mcp-server
+# @1mper-labs/mcp-server
 
 repo-lens 的 MCP 壳：通过 stdio 暴露仓库分析工具，供 DSH / Claude Code / Codex 等 MCP 宿主调用。
 
@@ -46,6 +46,6 @@ node scripts/smoke.mjs     # 冒烟：initialize 握手 → tools/list 校验三
 
 ## 说明
 
-- 依赖 `@modelcontextprotocol/sdk ^1.x` + `zod ^3.23` + `@repo-lens/core workspace:*`。
+- 依赖 `@modelcontextprotocol/sdk ^1.x` + `zod ^4.x` + `@1mper-labs/core workspace:*`。
 - 相对导入带 `.ts` 扩展名（项目开启 `rewriteRelativeImportExtensions`，dist 中重写为 `.js`）。
 - `repo_lens_analyze` 有意不调用 `saveProfile`：MCP 工具保持无副作用；需要写缓存请用 CLI `repo-lens analyze`。
